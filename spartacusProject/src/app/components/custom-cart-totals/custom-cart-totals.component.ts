@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import {CartTotalsComponent} from '@spartacus/storefront';
+import {Component, OnInit} from '@angular/core';
 import {ActiveCartService, Cart, OrderEntry} from '@spartacus/core';
 import {Observable} from 'rxjs';
 import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-custom-cart-totals',
-  templateUrl: './custom-cart-totals.component.html',
-  styleUrls: ['./custom-cart-totals.component.scss']
+  templateUrl: './custom-cart-totals.component.html'
 })
 export class CustomCartTotalsComponent implements OnInit {
   cart$: Observable<Cart>;
   entries$: Observable<OrderEntry[]>;
 
-  constructor(protected activeCartService: ActiveCartService) {}
+  constructor(protected activeCartService: ActiveCartService) {
+  }
 
   ngOnInit() {
     console.log('test');

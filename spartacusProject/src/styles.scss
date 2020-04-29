@@ -1,3 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+$cart-components-whitelist: cx-mini-cart, cx-add-to-cart, cx-item-counter,
+cx-added-to-cart-dialog, cx-cart-details, cx-cart-item, cx-cart-item-list,
+app-custom-cart-totals, cx-cart-coupon, cx-applied-coupons, cx-add-to-wishlist,
+cx-save-for-later;
 
 @import '~@spartacus/styles/index';
+@import './styles/custom-cart-totals.component';

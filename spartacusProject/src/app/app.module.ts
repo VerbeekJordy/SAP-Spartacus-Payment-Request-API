@@ -2,10 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './Components/app/app.component';
+import { AppComponent } from './components/app/app.component';
 import { translations, translationChunksConfig } from '@spartacus/assets';
 import {B2cStorefrontModule, CartComponentModule, CartTotalsComponent} from '@spartacus/storefront';
-import { CustomCartTotalsComponent } from './Components/custom-cart-totals/custom-cart-totals.component';
+import { CustomCartTotalsComponent } from './components/custom-cart-totals/custom-cart-totals.component';
 import {I18nModule, UrlModule} from '@spartacus/core';
 
 @NgModule({
@@ -34,17 +34,18 @@ import {I18nModule, UrlModule} from '@spartacus/core';
       features: {
         level: '1.5',
         anonymousConsents: true
+      },
+      cmsComponents: {
+        CartTotalsComponent: {
+          component: CustomCartTotalsComponent
+        }
       }
-      // cmsComponents: {
-      //   CartTotalsComponent: {
-      //     component: CustomCartTotalsComponent
-      //   }
-      // }
     }),
     CartComponentModule,
     UrlModule,
     I18nModule,
   ],
+  entryComponents: [CustomCartTotalsComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
