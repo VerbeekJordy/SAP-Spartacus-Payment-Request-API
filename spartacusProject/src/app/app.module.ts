@@ -7,6 +7,7 @@ import { translations, translationChunksConfig } from '@spartacus/assets';
 import {B2cStorefrontModule, CartComponentModule, CartTotalsComponent} from '@spartacus/storefront';
 import { CustomCartTotalsComponent } from './components/custom-cart-totals/custom-cart-totals.component';
 import {I18nModule, UrlModule} from '@spartacus/core';
+import {PaymentRequestService} from './services/paymentRequest.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import {I18nModule, UrlModule} from '@spartacus/core';
     I18nModule,
   ],
   entryComponents: [CustomCartTotalsComponent],
-  providers: [],
+  providers: [PaymentRequestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
