@@ -3,6 +3,7 @@ import {ActiveCartService, Cart, OrderEntry} from '@spartacus/core';
 import {Observable} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {PaymentRequestService} from '../../services/paymentRequest.service';
+import {CustomeProductBasket} from '../../models/customProductBasket.model';
 
 @Component({
   selector: 'app-custom-cart-totals',
@@ -13,6 +14,7 @@ export class CustomCartTotalsComponent implements OnInit {
   entries$: Observable<OrderEntry[]>;
   available = (window as any).PaymentRequest;
   total: number;
+  products: Array<CustomeProductBasket> = [];
 
     constructor(protected activeCartService: ActiveCartService, protected paymentRequest: PaymentRequestService) {
   }
@@ -25,9 +27,11 @@ export class CustomCartTotalsComponent implements OnInit {
   }
 
   payButtonClicked() {
-    this.entries$.forEach((a) => console.log(a));
+    this.entries$.forEach((products) =>
+      products.forEach((product) =>
+        this.products.push(new CustomeProductBasket(product.product.name, product.totalPrice.value))));
     this.cart$.forEach((a) => console.log(this.total = a.totalPrice.value));
-    const request = this.paymentRequest.initPaymentRequest(this.total);
+    const request = this.paymentRequest.initPaymentRequest(this.total, this.products);
     this.paymentRequest.onBuyClicked(request);
   }
 }

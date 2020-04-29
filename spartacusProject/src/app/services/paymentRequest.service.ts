@@ -1,11 +1,12 @@
 import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Product} from '@spartacus/core';
+import {CustomeProductBasket} from '../models/customProductBasket.model';
 
 @Injectable()
 export class PaymentRequestService {
 
-  @Input() products: Array<Product> = [];
+  products: Array<CustomeProductBasket>;
 
   count: number;
 
@@ -49,11 +50,9 @@ export class PaymentRequestService {
 
   creatingBasketItems() {
     for (const item of this.products) {
-      this.total = +this.total + +item.price;
       this.paymentBasket.push({
-        // label: item.titleNl + '',
-        label: 'test',
-        amount: {currency: 'EUR', value: item.price + ''},
+        label: item.name + '',
+        amount: {currency: 'EUR', value: item.totalPrice + ''},
       });
     }
     this.paymentBasket.push({
@@ -62,8 +61,9 @@ export class PaymentRequestService {
     });
   }
 
-  initPaymentRequest(total: number) {
+  initPaymentRequest(total: number, products: Array<CustomeProductBasket>) {
     this.total = total;
+    this.products = products;
     const supportedInstruments = [{
       supportedMethods: 'basic-card',
       data: {supportedNetworks: ['visa', 'mastercard', 'maestro']},
