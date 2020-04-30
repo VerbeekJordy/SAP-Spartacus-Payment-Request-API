@@ -2,8 +2,16 @@
   <ng-container *ngIf="entries$ | async as entries">
     <cx-order-summary [cart]="cart"></cx-order-summary>
     <button
+      *ngIf="entries.length && available"
+      (click)="payButtonClicked()"
+      class="btn btn-primary btn-block"
+      type="button"
+    >
+      {{ 'cartDetails.proceedToCheckout' | cxTranslate }}
+    </button>
+    <button
       [routerLink]="{ cxRoute: 'checkout' } | cxUrl"
-      *ngIf="entries.length"
+      *ngIf="entries.length && !available"
       class="btn btn-primary btn-block"
       type="button"
     >
