@@ -8,8 +8,6 @@ export class PaymentRequestService {
 
   products: Array<CustomeProductBasket>;
 
-  count: number;
-
   total = 0;
 
   paymentBasket = [];
@@ -40,18 +38,10 @@ export class PaymentRequestService {
   constructor(private router: Router) {
   }
 
-  // removeItemFromCart(gift: Product) {
-  //   this.count = 0;
-  //   while (gift.imageUrl !== this.products[this.count].imageUrl) {
-  //     this.count++;
-  //   }
-  //   this.products.splice(this.count, 1);
-  // }
-
   creatingBasketItems() {
     for (const item of this.products) {
       this.paymentBasket.push({
-        label: item.name + '',
+        label: item.quantity + '  x  ' + item.name,
         amount: {currency: 'EUR', value: item.totalPrice + ''},
       });
     }
@@ -64,6 +54,7 @@ export class PaymentRequestService {
   initPaymentRequest(total: number, products: Array<CustomeProductBasket>) {
     this.total = total;
     this.products = products;
+    this.paymentBasket = [];
     const supportedInstruments = [{
       supportedMethods: 'basic-card',
       data: {supportedNetworks: ['visa', 'mastercard', 'maestro']},
@@ -158,7 +149,7 @@ export class PaymentRequestService {
         this.sendPaymentToServer(instrumentResponse);
       })
         .catch((err) => {
-          this.paymentBasket.splice(0);
+          this.paymentBasket = [];
           this.total = 0;
         });
     }

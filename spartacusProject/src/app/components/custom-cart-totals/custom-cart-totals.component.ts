@@ -16,7 +16,7 @@ export class CustomCartTotalsComponent implements OnInit {
   total: number;
   products: Array<CustomeProductBasket> = [];
 
-    constructor(protected activeCartService: ActiveCartService, protected paymentRequest: PaymentRequestService) {
+  constructor(protected activeCartService: ActiveCartService, protected paymentRequest: PaymentRequestService) {
   }
 
   ngOnInit() {
@@ -27,12 +27,14 @@ export class CustomCartTotalsComponent implements OnInit {
   }
 
   payButtonClicked() {
+    this.products = [];
     this.entries$.forEach((products) =>
       products.forEach((product) =>
-        this.products.push(new CustomeProductBasket(product.product.name, product.totalPrice.value))));
-    this.cart$.forEach((a) => console.log(this.total = a.totalPrice.value));
+        this.products.push(new CustomeProductBasket(product.product.name, product.totalPrice.value, product.quantity))));
+    this.cart$.forEach((checkout) => this.total = checkout.totalPrice.value);
     const request = this.paymentRequest.initPaymentRequest(this.total, this.products);
     this.paymentRequest.onBuyClicked(request);
+    this.entries$.forEach((a) => console.log(a));
   }
 }
 
