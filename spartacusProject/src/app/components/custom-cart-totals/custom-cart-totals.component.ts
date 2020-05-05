@@ -34,7 +34,6 @@ export class CustomCartTotalsComponent implements OnInit {
     this.cart$.forEach((checkout) => this.total = checkout.totalPrice.value);
     const request = this.paymentRequest.initPaymentRequest(this.total, this.products);
     this.paymentRequest.onBuyClicked(request);
-    this.entries$.forEach((a) => console.log(a));
   }
 }
 

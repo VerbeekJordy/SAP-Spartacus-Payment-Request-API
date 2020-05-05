@@ -1,10 +1,27 @@
 import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Product} from '@spartacus/core';
+import {CheckoutService, Product, RoutingService} from '@spartacus/core';
 import {CustomeProductBasket} from '../models/customProductBasket.model';
+import {filter} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
+import {AddressService} from './address.service';
+import {DeliveryModeService} from './deliveryMode.service';
 
 @Injectable()
 export class PaymentRequestService {
+
+
+
+  placeOrderSubscription: Subscription;
+
+
+
+
+
+
+
+
+
 
   products: Array<CustomeProductBasket>;
 
@@ -35,7 +52,9 @@ export class PaymentRequestService {
     }, ]
   };
 
-  constructor(private router: Router) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private router: Router, protected routingService: RoutingService, protected checkoutService: CheckoutService, protected addressService: AddressService,
+              protected  deliveryModeService: DeliveryModeService) {
   }
 
   creatingBasketItems() {
@@ -55,6 +74,37 @@ export class PaymentRequestService {
     this.total = total;
     this.products = products;
     this.paymentBasket = [];
+
+
+
+
+
+
+
+
+
+
+
+    this.placeOrderSubscription = this.checkoutService
+      .getOrderDetails()
+      .pipe(filter((order) => Object.keys(order).length !== 0))
+      .subscribe(() => {
+        this.routingService.go({ cxRoute: 'orderConfirmation' });
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const supportedInstruments = [{
       supportedMethods: 'basic-card',
       data: {supportedNetworks: ['visa', 'mastercard', 'maestro']},
@@ -161,12 +211,13 @@ export class PaymentRequestService {
         .then(() => {
           // const payment = new PaymentDto(instrumentResponse.methodName);
           // this.orderService.addOrder(this.converter.productToStringArray(this.products), payment);
+          this.addressService.addAddress().subscribe(() => this.deliveryModeService.initialize());
+          // this.checkoutService.placeOrder();
         })
         .catch((err) => {
 
         }).finally(() => {
-        console.log('Betaald');
-        this.router.navigateByUrl('/transaction');
+        this.routingService.go({ cxRoute: 'orderConfirmation' });
       });
     }, 2000);
   }
