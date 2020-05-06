@@ -2,25 +2,17 @@ import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {CheckoutService, Product, RoutingService} from '@spartacus/core';
 import {CustomeProductBasket} from '../models/customProductBasket.model';
-import {filter} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {AddressService} from './address.service';
 import {DeliveryModeService} from './deliveryMode.service';
+import {PaymentService} from './payment.service';
 
 @Injectable()
 export class PaymentRequestService {
 
 
-
   placeOrderSubscription: Subscription;
-
-
-
-
-
-
-
-
 
 
   products: Array<CustomeProductBasket>;
@@ -49,12 +41,12 @@ export class PaymentRequestService {
           gatewayMerchantId: 'exampleGatewayMerchantId'
         }
       }
-    }, ]
+    },]
   };
 
   // tslint:disable-next-line:max-line-length
   constructor(private router: Router, protected routingService: RoutingService, protected checkoutService: CheckoutService, protected addressService: AddressService,
-              protected  deliveryModeService: DeliveryModeService) {
+              protected  deliveryModeService: DeliveryModeService, protected paymentService: PaymentService) {
   }
 
   creatingBasketItems() {
@@ -76,33 +68,12 @@ export class PaymentRequestService {
     this.paymentBasket = [];
 
 
-
-
-
-
-
-
-
-
-
     this.placeOrderSubscription = this.checkoutService
       .getOrderDetails()
       .pipe(filter((order) => Object.keys(order).length !== 0))
       .subscribe(() => {
-        this.routingService.go({ cxRoute: 'orderConfirmation' });
+        this.routingService.go({cxRoute: 'orderConfirmation'});
       });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     const supportedInstruments = [{
@@ -209,15 +180,15 @@ export class PaymentRequestService {
     window.setTimeout(() => {
       instrumentResponse.complete('success')
         .then(() => {
-          // const payment = new PaymentDto(instrumentResponse.methodName);
-          // this.orderService.addOrder(this.converter.productToStringArray(this.products), payment);
-          this.addressService.addAddress().subscribe(() => this.deliveryModeService.initialize());
+          this.addressService.addAddress().subscribe(() => this.deliveryModeService.initialize()
+            .subscribe((() => this.paymentService.setPaymentDetails().subscribe(() => this.checkoutService.placeOrder()))));
+          // setTimeout(this.checkoutService.placeOrder, 6000);
           // this.checkoutService.placeOrder();
         })
         .catch((err) => {
 
         }).finally(() => {
-        this.routingService.go({ cxRoute: 'orderConfirmation' });
+        this.routingService.go({cxRoute: 'orderConfirmation'});
       });
     }, 2000);
   }
