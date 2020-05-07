@@ -21,7 +21,7 @@ export class AddressService {
     } as Country;
 
     const address = {
-      companyName: 'teen',
+      companyName: null,
       country: countryIso,
       defaultAddress: true,
       email: instrumentResponse.payerEmail,
