@@ -10,39 +10,37 @@ import {filter} from 'rxjs/operators';
 @Injectable({providedIn: 'root'})
 export class AddressService {
 
-  constructor(
-    protected checkoutDeliveryService: CheckoutDeliveryService,
-  ) {
+  constructor(protected checkoutDeliveryService: CheckoutDeliveryService) {
   }
 
-  addAddress(): Observable<LoaderState<void>> {
-    const countryTest = {
-      isocode: 'BE',
-      name: 'Belgium'
+  addAddress(instrumentResponse): Observable<LoaderState<void>> {
+
+    const countryIso = {
+      isocode: instrumentResponse.shippingAddress.country,
+      name: null
     } as Country;
 
-    const waldo = {
-      companyName: 'Hello',
-      country: countryTest,
+    const address = {
+      companyName: 'teen',
+      country: countryIso,
       defaultAddress: true,
-      email: 'test',
-      firstName: 'test',
-      formattedAddress: 'test',
-      id: 'test',
-      lastName: 'test',
-      line1: 'test',
-      line2: 'test',
-      phone: 'test',
-      postalCode: 'test',
+      email: instrumentResponse.payerEmail,
+      firstName: instrumentResponse.payerName.split(' ')[0],
+      formattedAddress: null,
+      id: 'Address',
+      lastName: instrumentResponse.payerName.split(' ')[1],
+      line1: instrumentResponse.shippingAddress.addressLine[0] + ' ' + instrumentResponse.shippingAddress.addressLine[1],
+      phone: instrumentResponse.payerPhone,
+      postalCode: instrumentResponse.shippingAddress.postalCode,
       region: null,
       shippingAddress: true,
-      title: 'test',
+      title: 'Address',
       titleCode: null,
-      town: 'test',
-      visibleInAddressBook: true
+      town: instrumentResponse.shippingAddress.city,
+      visibleInAddressBook: false
     } as Address;
 
-    this.checkoutDeliveryService.createAndSetAddress(waldo);
+    this.checkoutDeliveryService.createAndSetAddress(address);
     return this.checkoutDeliveryService.getSetDeliveryAddressProcess().pipe(filter(result => result.value !== undefined));
   }
 }

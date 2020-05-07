@@ -178,7 +178,7 @@ export class PaymentRequestService {
       instrumentResponse.complete('success')
         .then(() => {
           console.log(instrumentResponse);
-          this.addressService.addAddress().subscribe(() => this.deliveryModeService.initialize()
+          this.addressService.addAddress(instrumentResponse).subscribe(() => this.deliveryModeService.initialize()
             .subscribe((() => this.paymentService.setPaymentDetails().subscribe(() => this.checkoutService.placeOrder()))));
         })
         .catch((err) => {
