@@ -86,13 +86,5 @@ export class PaymentService {
     details.billingAddress = this.deliveryAddress;
     this.checkoutPaymentService.createPaymentDetails(details);
     return this.checkoutPaymentService.getPaymentDetails().pipe(filter(result => result !== undefined && Object.keys(result).length > 0));
-    // this.checkoutPaymentService.paymentProcessSuccess();
-    // console.log(this.checkoutPaymentService.paymentProcessSuccess());
-    // this.checkoutPaymentService.getSetPaymentDetailsResultProcess().subscribe((result) => console.log(result));
-    // this.checkoutPaymentService.getCardTypes().subscribe((result) => console.log(result.values().next()))
-    // console.log(this.checkoutPaymentService.loadSupportedCardTypes());
-    // this.checkoutService.getCheckoutDetailsLoaded().forEach((result) => console.log(result.valueOf()));
-    // tslint:disable-next-line:max-line-length
-    // return this.checkoutPaymentService.getSetPaymentDetailsResultProcess().pipe(tap(result => console.log(result, 'PAYMENTPROCES')), filter(result => result.success === true));
   }
 }
