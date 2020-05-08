@@ -26,7 +26,20 @@ export class PaymentService {
   //   this.checkoutPaymentService.setPaymentDetails(paymentDetails);
   // }
 
-  setPaymentDetails() {
+  setPaymentDetails(instrumentResponse) {
+
+    console.log(instrumentResponse.cardNumber);
+    console.log(instrumentResponse.payerName);
+    console.log(instrumentResponse.expiryMonth);
+    console.log(instrumentResponse.expiryYear);
+    console.log(instrumentResponse.cvn);
+    console.log(instrumentResponse.details.expiryYear);
+    console.log(instrumentResponse.details.expiryMonth);
+    console.log(instrumentResponse.details.cardNumber);
+    console.log(instrumentResponse.details.cardSecurityCode);
+    console.log(instrumentResponse.details.cvn);
+    console.log(instrumentResponse.details.card_cvNumber);
+
     const countryTest = {
       isocode: 'BE',
       name: 'Belgium'
@@ -59,14 +72,14 @@ export class PaymentService {
     } as CardType;
 
     const waldo = {
-      accountHolderName: 'jordy',
+      accountHolderName: instrumentResponse.payerName,
       billingAddress: walda,
-      cardNumber: '5364960805359328',
+      cardNumber: instrumentResponse.details.cardNumber,
       cardType: waldi,
-      cvn: '578',
+      cvn: instrumentResponse.details.cardSecurityCode,
       defaultPayment: true,
-      expiryMonth: '05',
-      expiryYear: '2024',
+      expiryMonth: instrumentResponse.details.expiryMonth,
+      expiryYear: instrumentResponse.details.expiryYear,
       id: null,
       issueNumber: null,
       saved: true,
