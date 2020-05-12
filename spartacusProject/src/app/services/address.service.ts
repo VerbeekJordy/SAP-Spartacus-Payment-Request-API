@@ -4,7 +4,7 @@ import {
   CheckoutDeliveryService, Country, LoaderState,
 } from '@spartacus/core';
 import {Observable} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import {delay, filter} from 'rxjs/operators';
 
 
 @Injectable({providedIn: 'root'})
@@ -41,6 +41,6 @@ export class AddressService {
     } as Address;
 
     this.checkoutDeliveryService.createAndSetAddress(address);
-    return this.checkoutDeliveryService.getSetDeliveryAddressProcess().pipe(filter(result => result.value !== undefined));
+    return this.checkoutDeliveryService.getSetDeliveryAddressProcess().pipe(filter(result => result.value !== undefined), delay(1000));
   }
 }

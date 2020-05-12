@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {CheckoutDeliveryService, DeliveryMode, LoaderState} from '@spartacus/core';
-import {filter} from 'rxjs/operators';
+import {delay, filter} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class DeliveryModeService {
@@ -13,8 +13,13 @@ export class DeliveryModeService {
 
   initialize(): Observable<LoaderState<void>> {
     this.supportedDeliveryModes$ = this.checkoutDeliveryService.getSupportedDeliveryModes();
+    console.log(this.supportedDeliveryModes$);
     this.currentDeliveryModeId = 'standard-gross';
     this.checkoutDeliveryService.setDeliveryMode(this.currentDeliveryModeId);
-    return this.checkoutDeliveryService.getSetDeliveryModeProcess().pipe(filter(result => result.value !== undefined));
+    this.checkoutDeliveryService.getSetDeliveryModeProcess().subscribe(result => console.log(result));
+    return this.checkoutDeliveryService.getSetDeliveryModeProcess().pipe(filter(result => result.value !== undefined
+      && result.success === true
+      && result.loading === false
+      && result.error === false));
   }
 }

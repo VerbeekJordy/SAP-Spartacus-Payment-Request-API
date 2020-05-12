@@ -39,7 +39,7 @@ export class PaymentRequestService {
           gatewayMerchantId: 'exampleGatewayMerchantId'
         }
       }
-    },]
+    }, ]
   };
 
   // tslint:disable-next-line:max-line-length
@@ -76,17 +76,17 @@ export class PaymentRequestService {
     const supportedInstruments = [{
       supportedMethods: 'basic-card',
       data: {supportedNetworks: ['visa', 'mastercard', 'maestro']},
-    // }, {supportedMethods: 'https://google.com/pay', data: this.googlePaymentDataRequest},
-    //   {
-    //     supportedMethods: 'https://apple.com/apple-pay',
-    //     data: {
-    //       version: 3,
-    //       merchantIdentifier: 'merchant.com.example',
-    //       merchantCapabilities: ['supports3DS', 'supportsCredit', 'supportsDebit'],
-    //       supportedNetworks: ['amex', 'discover', 'masterCard', 'visa'],
-    //       countryCode: 'US',
-    //     }
-      }
+      // }, {supportedMethods: 'https://google.com/pay', data: this.googlePaymentDataRequest},
+      //   {
+      //     supportedMethods: 'https://apple.com/apple-pay',
+      //     data: {
+      //       version: 3,
+      //       merchantIdentifier: 'merchant.com.example',
+      //       merchantCapabilities: ['supports3DS', 'supportsCredit', 'supportsDebit'],
+      //       supportedNetworks: ['amex', 'discover', 'masterCard', 'visa'],
+      //       countryCode: 'US',
+      //     }
+    }
     ];
 
     this.creatingBasketItems();

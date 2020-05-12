@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {PaymentRequestService} from '../../services/paymentRequest.service';
 import {CustomeProductBasket} from '../../models/customProductBasket.model';
-import {cart} from '@spartacus/assets/translations/en/cart';
 
 @Component({
   selector: 'app-custom-cart-totals',
@@ -34,11 +33,11 @@ export class CustomCartTotalsComponent implements OnInit {
         this.products.push(new CustomeProductBasket(product.product.name, product.totalPrice.value, product.quantity))));
     // tslint:disable-next-line:no-shadowed-variable
     this.cart$.subscribe((cart) => {
-    if (cart.totalPrice !== undefined) {
-      this.total = cart.totalPrice.value;
-    }}
-  )
-    ;
+        if (cart.totalPrice !== undefined) {
+          this.total = cart.totalPrice.value;
+        }
+      }
+    );
     const request = this.paymentRequest.initPaymentRequest(this.total, this.products);
     this.paymentRequest.onBuyClicked(request);
   }
