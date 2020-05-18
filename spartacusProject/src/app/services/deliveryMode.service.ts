@@ -11,9 +11,8 @@ export class DeliveryModeService {
   constructor(private checkoutDeliveryService: CheckoutDeliveryService) {
   }
 
-  initialize(): Observable<LoaderState<void>> {
+  addDeliveryMode(): Observable<LoaderState<void>> {
     this.supportedDeliveryModes$ = this.checkoutDeliveryService.getSupportedDeliveryModes();
-    console.log(this.supportedDeliveryModes$);
     this.currentDeliveryModeId = 'standard-gross';
     this.checkoutDeliveryService.setDeliveryMode(this.currentDeliveryModeId);
     this.checkoutDeliveryService.getSetDeliveryModeProcess().subscribe(result => console.log(result));

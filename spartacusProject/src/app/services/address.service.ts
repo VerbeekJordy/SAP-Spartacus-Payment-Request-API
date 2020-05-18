@@ -14,7 +14,6 @@ export class AddressService {
   }
 
   addAddress(instrumentResponse): Observable<LoaderState<void>> {
-
     const countryIso = {
       isocode: instrumentResponse.shippingAddress.country,
       name: null
@@ -41,6 +40,6 @@ export class AddressService {
     } as Address;
 
     this.checkoutDeliveryService.createAndSetAddress(address);
-    return this.checkoutDeliveryService.getSetDeliveryAddressProcess().pipe(filter(result => result.value !== undefined), delay(1000));
+    return this.checkoutDeliveryService.getSetDeliveryAddressProcess().pipe(filter(result => result.value !== undefined), delay(1500));
   }
 }

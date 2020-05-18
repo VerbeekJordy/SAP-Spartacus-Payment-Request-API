@@ -1,0 +1,20 @@
+<form id="formg" *ngIf="productCode" [formGroup]="addToCartForm" (submit)="addToCart()">
+  <button
+    *ngIf="available && hasStock"
+    class="btn btn-primary btn-block"
+    type="submit"
+    [disabled]="quantity <= 0 || quantity > maxQuantity"
+    (click)="buyNow = true"
+  >
+    Buy Now
+  </button>
+
+  <button
+    *ngIf="hasStock"
+    class="btn btn-primary btn-block"
+    type="submit"
+    [disabled]="quantity <= 0 || quantity > maxQuantity"
+  >
+    {{ 'addToCart.addToCart' | cxTranslate }}
+  </button>
+</form>
