@@ -4,7 +4,14 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { translations, translationChunksConfig } from '@spartacus/assets';
-import {B2cStorefrontModule, CartComponentModule, ItemCounterModule, ListNavigationModule, ProductListModule} from '@spartacus/storefront';
+import {
+  B2cStorefrontModule,
+  CartComponentModule,
+  ItemCounterModule,
+  ListNavigationModule,
+  MediaModule,
+  ProductListModule, StarRatingModule
+} from '@spartacus/storefront';
 import { CustomCartTotalsComponent } from './components/custom-cart-totals/custom-cart-totals.component';
 import {I18nModule, UrlModule} from '@spartacus/core';
 import {PaymentRequestService} from './services/paymentRequest.service';
@@ -75,6 +82,8 @@ import { CustomProductListComponent } from './components/custom-product-list/cus
     ReactiveFormsModule,
     ListNavigationModule,
     ProductListModule,
+    MediaModule,
+    StarRatingModule,
   ],
   entryComponents: [CustomCartTotalsComponent, CustomAddToCartComponent, CustomProductListComponent],
   providers: [PaymentRequestService],
