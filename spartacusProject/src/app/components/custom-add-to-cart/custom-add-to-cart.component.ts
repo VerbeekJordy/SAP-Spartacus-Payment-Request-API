@@ -5,8 +5,8 @@ import {Observable, Subscription} from 'rxjs';
 import {FormControl, FormGroup} from '@angular/forms';
 import {delay, filter, timeout} from 'rxjs/operators';
 import {ChangeDetectionStrategy} from '@angular/core';
-import {CustomeProductBasket} from '../models/customProductBasket.model';
-import {PaymentRequestService} from '../services/paymentRequest.service';
+import {CustomeProductBasket} from '../../models/customProductBasket.model';
+import {PaymentRequestService} from '../../services/paymentRequest.service';
 
 @Component({
   selector: 'app-custom-add-to-cart',
@@ -118,7 +118,6 @@ export class CustomAddToCartComponent implements OnInit, OnDestroy {
         if (this.buyNow === false) {
           this.routingService.go({cxRoute: 'home'});
         } else {
-          this.routingService.go({cxRoute: 'cart'});
           console.log(this.activeCartService.getLoaded());
           setTimeout(() => {
             this.payButtonClicked();

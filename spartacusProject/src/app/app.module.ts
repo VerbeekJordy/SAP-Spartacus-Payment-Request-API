@@ -4,20 +4,31 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { translations, translationChunksConfig } from '@spartacus/assets';
-import {B2cStorefrontModule, CartComponentModule, ItemCounterModule} from '@spartacus/storefront';
+import {
+  B2cStorefrontModule,
+  CartComponentModule,
+  ItemCounterModule,
+  ListNavigationModule,
+  MediaModule,
+  ProductListModule, StarRatingModule
+} from '@spartacus/storefront';
 import { CustomCartTotalsComponent } from './components/custom-cart-totals/custom-cart-totals.component';
 import {I18nModule, UrlModule} from '@spartacus/core';
 import {PaymentRequestService} from './services/paymentRequest.service';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import {CustomAddToCartComponent} from './custom-add-to-cart/custom-add-to-cart.component';
+import {CustomAddToCartComponent} from './components/custom-add-to-cart/custom-add-to-cart.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { CustomProductListItemComponent } from './components/custom-product-list-item/custom-product-list-item.component';
+import { CustomProductListComponent } from './components/custom-product-list/custom-product-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomCartTotalsComponent,
-    CustomAddToCartComponent
+    CustomAddToCartComponent,
+    CustomProductListItemComponent,
+    CustomProductListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'serverApp'}),
@@ -51,6 +62,15 @@ import {ReactiveFormsModule} from '@angular/forms';
         },
         ProductAddToCartComponent: {
           component: CustomAddToCartComponent
+        },
+        CMSProductListComponent: {
+          component: CustomProductListComponent,
+        },
+        ProductGridComponent: {
+          component: CustomProductListComponent,
+        },
+        SearchResultsListComponent: {
+          component: CustomProductListComponent,
         }
       }
     }),
@@ -60,8 +80,12 @@ import {ReactiveFormsModule} from '@angular/forms';
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
     ItemCounterModule,
     ReactiveFormsModule,
+    ListNavigationModule,
+    ProductListModule,
+    MediaModule,
+    StarRatingModule,
   ],
-  entryComponents: [CustomCartTotalsComponent, CustomAddToCartComponent],
+  entryComponents: [CustomCartTotalsComponent, CustomAddToCartComponent, CustomProductListComponent],
   providers: [PaymentRequestService],
   bootstrap: [AppComponent]
 })
